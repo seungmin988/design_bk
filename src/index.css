@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Cormorant Garamond", "Noto Sans KR", serif;
+  --font-sans: "Montserrat", "Noto Sans KR", sans-serif;
+  --color-warm-white: #FDFCFB;
+  --color-beige: #F5EBE0;
+  --color-wood: #A68A64;
+  --color-clay: #B07D62;
+  --color-charcoal: #333333;
+}
+
+@layer base {
+  body {
+    @apply bg-warm-white text-charcoal font-sans antialiased;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+}
+
+.luxury-underline {
+  @apply relative inline-block;
+}
+
+.luxury-underline::after {
+  content: '';
+  @apply absolute bottom-0 left-0 w-0 h-[1px] bg-wood transition-all duration-500;
+}
+
+.luxury-underline:hover::after {
+  @apply w-full;
+}
+
+.glass-nav {
+  @apply bg-warm-white/90 backdrop-blur-md border-b border-charcoal/5;
+}
+
+.cozy-card {
+  @apply bg-white rounded-2xl shadow-sm border border-beige/50 overflow-hidden transition-all duration-500 hover:shadow-xl hover:-translate-y-2;
+}
+
+.soft-pill {
+  @apply px-6 py-2 rounded-full border border-wood/20 text-[11px] tracking-widest hover:bg-wood hover:text-warm-white transition-all duration-300;
+}
+
+.oval-mask {
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+}
