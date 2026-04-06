@@ -18,9 +18,6 @@
 
   body {
     @apply bg-warm-white text-charcoal font-sans antialiased;
-    background-image:
-      radial-gradient(circle at top left, rgba(245, 235, 224, 0.7), transparent 30%),
-      linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(253, 252, 251, 1));
   }
   
   h1, h2, h3, h4, h5, h6 {
@@ -34,7 +31,7 @@
 
 .luxury-underline::after {
   content: '';
-  @apply absolute bottom-0 left-0 w-0 h-[1px] bg-wood transition-all duration-500;
+  @apply absolute bottom-0 left-0 w-0 h-px bg-wood transition-all duration-500;
 }
 
 .luxury-underline:hover::after {
@@ -42,90 +39,24 @@
 }
 
 .glass-nav {
-  @apply bg-warm-white/80 backdrop-blur-md border-b border-charcoal/5 shadow-sm;
+  @apply bg-warm-white/90 backdrop-blur-md border-b border-charcoal/5;
 }
 
 .cozy-card {
-  @apply bg-white rounded-[1.75rem] shadow-sm border border-beige/60 overflow-hidden transition-all duration-500 hover:shadow-xl hover:-translate-y-1.5;
+  @apply bg-white rounded-3xl shadow-sm border border-beige/50 overflow-hidden transition-all duration-500 hover:shadow-xl hover:-translate-y-1;
 }
 
 .soft-pill {
-  @apply px-6 py-2 rounded-full border border-wood/25 bg-white/70 text-[11px] tracking-widest hover:bg-wood hover:text-warm-white transition-all duration-300;
+  @apply px-6 py-2 rounded-full border border-wood/20 text-[11px] tracking-widest hover:bg-wood hover:text-warm-white transition-all duration-300;
 }
 
 .oval-mask {
   border-radius: 50% 50% 0 0 / 100% 100% 0 0;
 }
 
-.hero-orb {
-  position: absolute;
-  z-index: 0;
-  border-radius: 9999px;
-  filter: blur(18px);
-  opacity: 0.5;
-  pointer-events: none;
-}
-
-.hero-orb-left {
-  width: 14rem;
-  height: 14rem;
-  left: -4rem;
-  top: 7rem;
-  background: rgba(245, 235, 224, 0.9);
-}
-
-.hero-orb-right {
-  width: 18rem;
-  height: 18rem;
-  right: -5rem;
-  bottom: 6rem;
-  background: rgba(176, 125, 98, 0.12);
-}
-
-.hero-metric-card {
-  @apply rounded-[1.5rem] border border-white/60 bg-white/78 px-5 py-4 shadow-sm backdrop-blur-sm;
-}
-
-.editorial-panel {
-  @apply rounded-[2rem] border border-white/65 bg-white/78 p-8 shadow-xl backdrop-blur-md;
-}
-
-.process-card {
-  @apply rounded-[1.75rem] border border-beige/60 bg-warm-white/65 px-6 pb-8 pt-4;
-}
-
-.service-panel {
-  box-shadow: 0 20px 60px rgba(51, 51, 51, 0.04);
-}
-
-.contact-shell {
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
-}
-
-/* Skip layout/paint for sections outside viewport to speed first render on mobile. */
-.defer-section {
-  content-visibility: auto;
-  contain-intrinsic-size: 1px 960px;
-}
-
 @media (max-width: 768px) {
-  .hero-orb {
-    filter: blur(10px);
-    opacity: 0.35;
-  }
-
-  .hero-orb-left {
-    width: 8rem;
-    height: 8rem;
-    left: -2rem;
-    top: 5rem;
-  }
-
-  .hero-orb-right {
-    width: 10rem;
-    height: 10rem;
-    right: -2rem;
-    bottom: 8rem;
+  .glass-nav {
+    @apply bg-warm-white/95 backdrop-blur-none;
   }
 }
 
