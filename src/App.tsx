@@ -11,13 +11,9 @@ import {
   ArrowRight, 
   Instagram, 
   Facebook, 
-  Linkedin, 
   MapPin, 
   Phone, 
   Mail,
-  ChevronRight,
-  ChevronLeft,
-  Play,
   ArrowUpRight,
   Home,
   Sparkles,
@@ -89,6 +85,45 @@ const SERVICES = [
   }
 ];
 
+const NAV_ITEMS = [
+  { name: '포트폴리오', link: '#portfolio' },
+  { name: '서비스', link: '#services' },
+  { name: '스튜디오', link: '#about' },
+  { name: '문의하기', link: '#contact' }
+];
+
+const HERO_METRICS = [
+  { value: '25+', label: 'years of experience' },
+  { value: '2,000+', label: 'completed homes' },
+  { value: '98%', label: 'client satisfaction' }
+];
+
+const useLightMotion = () => {
+  const [lightMotion, setLightMotion] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const mobileQuery = window.matchMedia('(max-width: 768px)');
+    const reducedQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    const sync = () => {
+      setLightMotion(mobileQuery.matches || reducedQuery.matches);
+    };
+
+    sync();
+    mobileQuery.addEventListener('change', sync);
+    reducedQuery.addEventListener('change', sync);
+
+    return () => {
+      mobileQuery.removeEventListener('change', sync);
+      reducedQuery.removeEventListener('change', sync);
+    };
+  }, []);
+
+  return lightMotion;
+};
+
 // --- Components ---
 
 const Logo = () => (
@@ -97,6 +132,32 @@ const Logo = () => (
     <span className="text-2xl font-sans font-light tracking-tight text-charcoal">DESIGN <span className="font-bold">BK</span></span>
   </div>
 );
+
+const SectionHeading = ({
+  eyebrow,
+  title,
+  description,
+  align = 'left'
+}: {
+  eyebrow: string;
+  title: React.ReactNode;
+  description?: string;
+  align?: 'left' | 'center';
+}) => {
+  const alignClass = align === 'center' ? 'text-center mx-auto' : '';
+
+  return (
+    <div className={`max-w-2xl ${alignClass}`}>
+      <span className="text-clay text-[11px] uppercase tracking-[0.35em] mb-4 block font-bold">{eyebrow}</span>
+      <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif leading-[1.1] text-balance">{title}</h2>
+      {description && (
+        <p className="mt-4 text-sm md:text-base text-charcoal/60 leading-relaxed break-keep font-light">
+          {description}
+        </p>
+      )}
+    </div>
+  );
+};
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -113,13 +174,8 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 md:px-6 flex justify-between items-center">
         <Logo />
         
-        <div className="hidden md:flex space-x-12 items-center">
-          {[
-            { name: '포트폴리오', link: '#portfolio' },
-            { name: '서비스', link: '#services' },
-            { name: '스튜디오', link: '#about' },
-            { name: '문의하기', link: '#contact' }
-          ].map((item) => (
+        <div className="hidden md:flex items-center gap-8 rounded-full border border-white/60 bg-white/70 px-5 py-3 shadow-sm backdrop-blur-md">
+          {NAV_ITEMS.map((item) => (
             <a key={item.name} href={item.link} className="text-[12px] tracking-widest luxury-underline font-medium text-charcoal/80 hover:text-charcoal transition-colors">
               {item.name}
             </a>
@@ -143,14 +199,9 @@ const Navbar = () => {
             <button className="absolute top-8 right-6 text-charcoal" onClick={() => setIsOpen(false)}>
               <X size={24} />
             </button>
-            {[
-              { name: 'PORTFOLIO', link: '#portfolio' },
-              { name: 'SERVICES', link: '#services' },
-              { name: 'STUDIO', link: '#about' },
-              { name: 'CONTACT', link: '#contact' }
-            ].map((item) => (
+            {NAV_ITEMS.map((item) => (
               <a 
-                key={item.name} 
+                key={item.name}
                 href={item.link} 
                 onClick={() => setIsOpen(false)} 
                 className="text-2xl sm:text-3xl font-serif tracking-widest hover:text-wood transition-colors"
@@ -166,50 +217,94 @@ const Navbar = () => {
 };
 
 const Hero = () => {
+  const lightMotion = useLightMotion();
+
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-beige/20 py-28 md:py-0">
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-beige/20 py-24 md:py-0">
       <div className="absolute inset-0 z-0">
         <motion.img 
-          initial={{ scale: 1.05 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 8, ease: "easeOut" }}
+          initial={lightMotion ? false : { scale: 1.03 }}
+          animate={lightMotion ? undefined : { scale: 1 }}
+          transition={lightMotion ? undefined : { duration: 4, ease: 'easeOut' }}
           src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=2000" 
           alt="Cozy Home" 
           className="w-full h-full object-cover"
           referrerPolicy="no-referrer"
+          fetchPriority="high"
+          decoding="async"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-warm-white/80 via-warm-white/40 to-transparent" />
       </div>
 
+      <div className="hero-orb hero-orb-left" />
+      <div className="hero-orb hero-orb-right" />
+
       <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 w-full">
         <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-          className="max-w-2xl"
+          initial={lightMotion ? false : { opacity: 0, x: -20 }}
+          animate={lightMotion ? undefined : { opacity: 1, x: 0 }}
+          transition={lightMotion ? undefined : { duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="grid items-end gap-10 lg:grid-cols-[minmax(0,1fr)_22rem]"
         >
-          <div className="flex items-center space-x-3 mb-5 md:mb-6">
-            <div className="w-8 h-[1px] bg-wood" />
-            <span className="text-wood text-[11px] uppercase tracking-[0.4em] font-semibold">
-              COZY & WARM REMODELING
-            </span>
+          <div className="max-w-3xl">
+            <div className="flex items-center space-x-3 mb-5 md:mb-6">
+              <div className="w-8 h-[1px] bg-wood" />
+              <span className="text-wood text-[11px] uppercase tracking-[0.4em] font-semibold">
+                COZY & WARM REMODELING
+              </span>
+            </div>
+            <h1 className="text-4xl sm:text-5xl md:text-7xl text-charcoal leading-[1.05] md:leading-[1.08] mb-6 md:mb-8 font-serif text-balance">
+              살고 싶은 집이 아니라<br />
+              <span className="italic font-light text-clay">머물고 싶은 집을 만듭니다</span>
+            </h1>
+            <p className="text-charcoal/70 text-sm sm:text-base md:text-lg font-light mb-8 md:mb-10 max-w-xl leading-relaxed break-keep">
+              디자인 BK는 과한 장식보다 생활의 밀도와 감정을 우선합니다.
+              따뜻한 재료, 정돈된 동선, 오래 봐도 질리지 않는 균형으로 일상에 자연스럽게 스며드는 공간을 설계합니다.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-5">
+              <a href="#contact" className="w-full sm:w-auto text-center px-8 md:px-10 py-4 bg-wood text-warm-white text-[11px] tracking-widest hover:bg-charcoal transition-all duration-500 rounded-full shadow-lg shadow-wood/20">
+                상담 예약하기
+              </a>
+              <a href="#portfolio" className="group w-full sm:w-auto flex items-center justify-center sm:justify-start space-x-4 text-charcoal text-[11px] tracking-widest px-8 md:px-10 py-4 border border-charcoal/10 rounded-full bg-white/70 hover:bg-white transition-all">
+                <span>시공 사례 보기</span>
+                <ArrowRight size={14} className="group-hover:translate-x-2 transition-transform" />
+              </a>
+            </div>
+
+            <div className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4">
+              {HERO_METRICS.map((metric) => (
+                <div key={metric.label} className="hero-metric-card">
+                  <p className="text-2xl md:text-3xl font-serif text-charcoal">{metric.value}</p>
+                  <p className="mt-1 text-[10px] uppercase tracking-[0.25em] text-charcoal/45">{metric.label}</p>
+                </div>
+              ))}
+            </div>
           </div>
-          <h1 className="text-4xl sm:text-5xl md:text-7xl text-charcoal leading-[1.15] md:leading-[1.2] mb-6 md:mb-8 font-serif">
-            당신의 일상이 <br />
-            <span className="italic font-light text-clay">더 아늑해지는 순간</span>
-          </h1>
-          <p className="text-charcoal/70 text-sm sm:text-base md:text-lg font-light mb-8 md:mb-10 max-w-lg leading-relaxed break-keep">
-            디자인 BK는 단순히 예쁜 집을 넘어, 그곳에 머무는 사람의 온기가 느껴지는 공간을 만듭니다. 
-            매일 아침 눈을 뜰 때 행복해지는 집, 디자인 BK와 함께 시작하세요.
-          </p>
-          <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
-            <button className="w-full sm:w-auto px-8 md:px-10 py-4 bg-wood text-warm-white text-[11px] tracking-widest hover:bg-charcoal transition-all duration-500 rounded-full shadow-lg shadow-wood/20">
-              상담 예약하기
-            </button>
-            <button className="group w-full sm:w-auto flex items-center justify-center sm:justify-start space-x-4 text-charcoal text-[11px] tracking-widest px-8 md:px-10 py-4 border border-charcoal/10 rounded-full hover:bg-white transition-all">
-              <span>시공 사례 보기</span>
-              <ArrowRight size={14} className="group-hover:translate-x-2 transition-transform" />
-            </button>
+
+          <div className="hidden lg:block">
+            <div className="editorial-panel">
+              <span className="text-[10px] uppercase tracking-[0.35em] text-charcoal/45">Signature Mood</span>
+              <h3 className="mt-5 text-3xl font-serif leading-tight text-charcoal">
+                차분한 결, 포근한 빛, 오래 머무는 균형
+              </h3>
+              <p className="mt-4 text-sm leading-relaxed text-charcoal/60 font-light break-keep">
+                고객의 취향을 공간 언어로 정리해 소재와 조명, 수납과 동선을 하나의 감도로 맞춥니다.
+              </p>
+              <div className="mt-8 space-y-4 text-sm text-charcoal/70">
+                <div className="flex items-center justify-between border-b border-charcoal/8 pb-3">
+                  <span>Residential Remodeling</span>
+                  <span>Seoul Based</span>
+                </div>
+                <div className="flex items-center justify-between border-b border-charcoal/8 pb-3">
+                  <span>Planning to Styling</span>
+                  <span>1:1 Direction</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span>Warm Minimal Mood</span>
+                  <span>Since 1998</span>
+                </div>
+              </div>
+            </div>
           </div>
         </motion.div>
       </div>
@@ -227,6 +322,8 @@ const Hero = () => {
 };
 
 const Process = () => {
+  const lightMotion = useLightMotion();
+
   const steps = [
     {
       number: "01",
@@ -251,27 +348,31 @@ const Process = () => {
   ];
 
   return (
-    <section className="py-20 md:py-32 bg-white overflow-hidden">
+    <section className="defer-section py-20 md:py-32 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 md:px-6">
-        <div className="text-center mb-14 md:mb-20">
-          <span className="text-clay text-[11px] uppercase tracking-[0.4em] mb-4 block font-bold">OUR PROCESS</span>
-          <h2 className="text-4xl md:text-5xl font-serif italic">공간이 완성되는 따뜻한 여정</h2>
+        <div className="mb-14 md:mb-20">
+          <SectionHeading
+            eyebrow="OUR PROCESS"
+            title={<>공간이 완성되는<br className="hidden sm:block" /> 따뜻한 여정</>}
+            description="첫 상담부터 입주 직전 마감까지, 고객이 지금 무엇을 알고 있어야 하는지 분명하게 전달하는 프로세스로 진행합니다."
+            align="center"
+          />
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-12">
           {steps.map((step, index) => (
             <motion.div 
               key={step.number}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={lightMotion ? false : { opacity: 0, y: 20 }}
+              whileInView={lightMotion ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.2 }}
-              className="relative group"
+              transition={lightMotion ? undefined : { delay: index * 0.12 }}
+              className="process-card relative group"
             >
-              <div className="text-7xl md:text-8xl font-serif text-beige/40 absolute -top-8 md:-top-10 -left-3 md:-left-4 group-hover:text-wood/10 transition-colors duration-700">
+              <div className="text-7xl md:text-8xl font-serif text-beige/50 absolute -top-8 md:-top-10 -left-1 md:-left-2 group-hover:text-wood/10 transition-colors duration-700">
                 {step.number}
               </div>
-              <div className="relative z-10 pt-8">
+              <div className="relative z-10 pt-12">
                 <h4 className="text-xl font-serif mb-4 group-hover:text-wood transition-colors">{step.title}</h4>
                 <p className="text-sm text-charcoal/50 leading-relaxed break-keep font-light">
                   {step.description}
@@ -289,15 +390,17 @@ const Process = () => {
 };
 
 const Portfolio = () => {
+  const lightMotion = useLightMotion();
+
   return (
-    <section id="portfolio" className="py-20 md:py-32 bg-warm-white">
+    <section id="portfolio" className="defer-section py-20 md:py-32 bg-warm-white">
       <div className="max-w-7xl mx-auto px-4 md:px-6">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-14 md:mb-20">
-          <div className="max-w-xl">
-            <span className="text-clay text-[11px] uppercase tracking-[0.3em] mb-4 block font-bold">PORTFOLIO</span>
-            <h2 className="text-4xl md:text-5xl font-serif italic mb-4">디자인 BK의 손길이 닿은 공간</h2>
-            <p className="text-charcoal/50 text-sm font-light">우리는 각자의 이야기가 담긴 따뜻한 공간을 지향합니다.</p>
-          </div>
+          <SectionHeading
+            eyebrow="PORTFOLIO"
+            title={<>디자인 BK의 손길이 닿은<br className="hidden sm:block" /> 따뜻한 공간</>}
+            description="보는 순간 강한 인상보다, 살아갈수록 만족이 커지는 집을 목표로 설계했습니다."
+          />
           <div className="mt-8 md:mt-0">
             <button className="soft-pill">전체 보기</button>
           </div>
@@ -307,10 +410,10 @@ const Portfolio = () => {
           {PROJECTS.map((project, index) => (
             <motion.div 
               key={project.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={lightMotion ? false : { opacity: 0, y: 20 }}
+              whileInView={lightMotion ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: index * 0.1 }}
+              transition={lightMotion ? undefined : { duration: 0.5, delay: index * 0.06 }}
               className="cozy-card group"
             >
               <div className="relative aspect-[16/11] overflow-hidden">
@@ -319,7 +422,10 @@ const Portfolio = () => {
                   alt={project.title} 
                   className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110"
                   referrerPolicy="no-referrer"
+                  loading="lazy"
+                  decoding="async"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-charcoal/30 via-transparent to-transparent opacity-80" />
                 <div className="absolute top-4 left-4">
                   <span className="bg-white/90 backdrop-blur-sm text-[10px] px-3 py-1 rounded-full text-wood font-bold tracking-widest">
                     {project.category}
@@ -327,10 +433,10 @@ const Portfolio = () => {
                 </div>
               </div>
               <div className="p-6 md:p-8">
-                <div className="flex justify-between items-start mb-4">
+                <div className="flex justify-between items-start gap-6 mb-4">
                   <div>
                     <h3 className="text-xl md:text-2xl font-serif mb-2 group-hover:text-wood transition-colors">{project.title}</h3>
-                    <p className="text-xs text-charcoal/40 flex items-center">
+                    <p className="text-xs text-charcoal/40 flex items-center tracking-[0.12em] uppercase">
                       <MapPin size={12} className="mr-1" /> {project.location}
                     </p>
                   </div>
@@ -351,23 +457,28 @@ const Portfolio = () => {
 };
 
 const Services = () => {
+  const lightMotion = useLightMotion();
+
   return (
-    <section id="services" className="py-20 md:py-32 bg-beige/30">
+    <section id="services" className="defer-section py-20 md:py-32 bg-beige/30">
       <div className="max-w-7xl mx-auto px-4 md:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20 items-center">
           <div className="order-2 lg:order-1">
-            <span className="text-wood text-[11px] uppercase tracking-[0.3em] mb-6 block font-bold">OUR SERVICES</span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl mb-10 md:mb-12 font-serif leading-tight">더 나은 일상을 위한 <br /> <span className="italic text-clay">공간의 재구성</span></h2>
+            <SectionHeading
+              eyebrow="OUR SERVICES"
+              title={<>더 나은 일상을 위한<br /> <span className="italic text-clay">공간의 재구성</span></>}
+              description="전체 리모델링부터 부분 스타일링까지, 생활 패턴에 맞춘 해법을 제안합니다."
+            />
             
-            <div className="grid grid-cols-1 gap-8">
+            <div className="grid grid-cols-1 gap-5 mt-10 md:mt-12">
               {SERVICES.map((service, index) => (
                 <motion.div 
                   key={service.title}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
+                  initial={lightMotion ? false : { opacity: 0, x: -16 }}
+                  whileInView={lightMotion ? undefined : { opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: index * 0.2 }}
-                  className="bg-white p-6 md:p-8 rounded-2xl border border-beige/50 flex items-start space-x-4 md:space-x-6 hover:shadow-md transition-all"
+                  transition={lightMotion ? undefined : { delay: index * 0.12 }}
+                  className="service-panel bg-white p-6 md:p-8 rounded-[1.75rem] border border-beige/60 flex items-start space-x-4 md:space-x-6 transition-all"
                 >
                   <div className="w-12 h-12 rounded-xl bg-beige flex items-center justify-center text-wood shrink-0">
                     {service.icon}
@@ -390,9 +501,11 @@ const Services = () => {
                 alt="Cozy Interior" 
                 className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"
+                loading="lazy"
+                decoding="async"
               />
             </div>
-            <div className="absolute -bottom-6 md:-bottom-10 left-3 md:-left-10 bg-white p-4 md:p-8 rounded-2xl shadow-xl max-w-[14rem] md:max-w-xs border border-beige/50">
+            <div className="absolute -bottom-6 md:-bottom-10 left-3 md:-left-10 bg-white/95 p-4 md:p-8 rounded-2xl shadow-xl max-w-[14rem] md:max-w-xs border border-beige/50 backdrop-blur-sm">
               <div className="flex items-center space-x-4 mb-4">
                 <div className="w-10 h-10 rounded-full bg-beige flex items-center justify-center text-wood">
                   <Coffee size={20} />
@@ -412,7 +525,7 @@ const Services = () => {
 
 const About = () => {
   return (
-    <section id="about" className="py-20 md:py-32 bg-warm-white">
+    <section id="about" className="defer-section py-20 md:py-32 bg-warm-white">
       <div className="max-w-7xl mx-auto px-4 md:px-6">
         <div className="flex flex-col lg:flex-row gap-12 md:gap-20 items-center">
           <div className="lg:w-1/2">
@@ -422,6 +535,8 @@ const About = () => {
                 alt="Interior Design Studio" 
                 className="w-full aspect-[4/3] object-cover rounded-3xl shadow-lg"
                 referrerPolicy="no-referrer"
+                loading="lazy"
+                decoding="async"
                 onError={(event) => {
                   const img = event.currentTarget;
                   img.onerror = null;
@@ -434,8 +549,11 @@ const About = () => {
             </div>
           </div>
           <div className="lg:w-1/2">
-            <span className="text-clay text-[11px] uppercase tracking-[0.3em] mb-6 block font-bold">THE STUDIO</span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif mb-6 md:mb-8 italic">공간에 온기를 더하는 사람들</h2>
+            <SectionHeading
+              eyebrow="THE STUDIO"
+              title={<>공간에 온기를 더하는<br /> 사람들</>}
+              description="유행보다 지속성을, 장식보다 사용감을 먼저 보는 팀입니다."
+            />
             <p className="text-charcoal/70 text-base md:text-lg leading-relaxed mb-5 md:mb-6 break-keep font-light">
               디자인 BK는 20년 넘게 한결같은 마음으로 고객의 공간을 연구해 왔습니다. 
               우리는 화려한 장식보다는 거주자의 편의와 심리적 안정을 우선으로 생각합니다.
@@ -445,12 +563,12 @@ const About = () => {
               디자인 BK와 함께라면 평범했던 일상이 특별한 휴식이 됩니다.
             </p>
             
-            <div className="grid grid-cols-2 gap-6 sm:flex sm:space-x-12 sm:gap-0">
-              <div>
+            <div className="grid grid-cols-2 gap-4 md:gap-6 sm:max-w-md">
+              <div className="rounded-[1.5rem] border border-beige/70 bg-white/80 p-5">
                 <p className="text-3xl font-serif mb-1 text-wood">2,000+</p>
                 <p className="text-[10px] uppercase tracking-widest text-charcoal/40">Happy Clients</p>
               </div>
-              <div>
+              <div className="rounded-[1.5rem] border border-beige/70 bg-white/80 p-5">
                 <p className="text-3xl font-serif mb-1 text-wood">25</p>
                 <p className="text-[10px] uppercase tracking-widest text-charcoal/40">Years Heritage</p>
               </div>
@@ -464,17 +582,20 @@ const About = () => {
 
 const Contact = () => {
   return (
-    <section id="contact" className="py-20 md:py-32 bg-white">
+    <section id="contact" className="defer-section py-20 md:py-32 bg-white">
       <div className="max-w-7xl mx-auto px-4 md:px-6">
-        <div className="bg-beige/20 rounded-[2rem] md:rounded-[3rem] p-6 sm:p-10 md:p-20 overflow-hidden relative">
+        <div className="contact-shell bg-beige/25 rounded-[2rem] md:rounded-[3rem] p-6 sm:p-10 md:p-20 overflow-hidden relative">
           <div className="absolute top-0 right-0 w-64 h-64 bg-wood/5 rounded-full -translate-y-1/2 translate-x-1/2" />
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-20 relative z-10">
             <div>
-              <span className="text-wood text-[11px] uppercase tracking-[0.3em] mb-6 block font-bold">CONTACT US</span>
-              <h2 className="text-3xl sm:text-4xl md:text-6xl mb-8 md:mb-12 font-serif italic leading-tight">아늑한 변화의 시작, <br /> 지금 문의하세요</h2>
+              <SectionHeading
+                eyebrow="CONTACT US"
+                title={<>아늑한 변화의 시작,<br /> 지금 문의하세요</>}
+                description="상담 단계에서 예산, 일정, 우선순위를 함께 정리해 드립니다. 부담 없이 현재 공간 이야기를 들려주세요."
+              />
               
-              <div className="space-y-5 md:space-y-8">
+              <div className="space-y-5 md:space-y-8 mt-8 md:mt-12">
                 <div className="flex items-center space-x-4">
                   <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-wood shadow-sm">
                     <Phone size={18} />
@@ -526,7 +647,7 @@ const Contact = () => {
 
 const Footer = () => {
   return (
-    <footer className="bg-charcoal text-warm-white py-16 md:py-20">
+    <footer className="defer-section bg-charcoal text-warm-white py-16 md:py-20">
       <div className="max-w-7xl mx-auto px-4 md:px-6">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-16">
           <Logo />
