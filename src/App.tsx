@@ -109,8 +109,8 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-700 ${scrolled ? 'glass-nav py-4' : 'bg-transparent py-8'}`}>
-      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-700 ${scrolled ? 'glass-nav py-3 md:py-4' : 'bg-transparent py-5 md:py-8'}`}>
+      <div className="max-w-7xl mx-auto px-4 md:px-6 flex justify-between items-center">
         <Logo />
         
         <div className="hidden md:flex space-x-12 items-center">
@@ -138,7 +138,7 @@ const Navbar = () => {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed inset-0 bg-warm-white z-50 p-12 flex flex-col justify-center items-center space-y-10 md:hidden"
+            className="fixed inset-0 bg-warm-white z-50 p-8 flex flex-col justify-center items-center space-y-8 md:hidden"
           >
             <button className="absolute top-8 right-6 text-charcoal" onClick={() => setIsOpen(false)}>
               <X size={24} />
@@ -153,7 +153,7 @@ const Navbar = () => {
                 key={item.name} 
                 href={item.link} 
                 onClick={() => setIsOpen(false)} 
-                className="text-3xl font-serif tracking-widest hover:text-wood transition-colors"
+                className="text-2xl sm:text-3xl font-serif tracking-widest hover:text-wood transition-colors"
               >
                 {item.name}
               </a>
@@ -167,7 +167,7 @@ const Navbar = () => {
 
 const Hero = () => {
   return (
-    <section className="relative h-screen flex items-center overflow-hidden bg-beige/20">
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-beige/20 py-28 md:py-0">
       <div className="absolute inset-0 z-0">
         <motion.img 
           initial={{ scale: 1.05 }}
@@ -181,32 +181,32 @@ const Hero = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-warm-white/80 via-warm-white/40 to-transparent" />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 w-full">
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
           className="max-w-2xl"
         >
-          <div className="flex items-center space-x-3 mb-6">
+          <div className="flex items-center space-x-3 mb-5 md:mb-6">
             <div className="w-8 h-[1px] bg-wood" />
             <span className="text-wood text-[11px] uppercase tracking-[0.4em] font-semibold">
               COZY & WARM REMODELING
             </span>
           </div>
-          <h1 className="text-5xl md:text-7xl text-charcoal leading-[1.2] mb-8 font-serif">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl text-charcoal leading-[1.15] md:leading-[1.2] mb-6 md:mb-8 font-serif">
             당신의 일상이 <br />
             <span className="italic font-light text-clay">더 아늑해지는 순간</span>
           </h1>
-          <p className="text-charcoal/70 text-base md:text-lg font-light mb-10 max-w-lg leading-relaxed break-keep">
+          <p className="text-charcoal/70 text-sm sm:text-base md:text-lg font-light mb-8 md:mb-10 max-w-lg leading-relaxed break-keep">
             디자인 BK는 단순히 예쁜 집을 넘어, 그곳에 머무는 사람의 온기가 느껴지는 공간을 만듭니다. 
             매일 아침 눈을 뜰 때 행복해지는 집, 디자인 BK와 함께 시작하세요.
           </p>
           <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
-            <button className="px-10 py-4 bg-wood text-warm-white text-[11px] tracking-widest hover:bg-charcoal transition-all duration-500 rounded-full shadow-lg shadow-wood/20">
+            <button className="w-full sm:w-auto px-8 md:px-10 py-4 bg-wood text-warm-white text-[11px] tracking-widest hover:bg-charcoal transition-all duration-500 rounded-full shadow-lg shadow-wood/20">
               상담 예약하기
             </button>
-            <button className="group flex items-center space-x-4 text-charcoal text-[11px] tracking-widest px-10 py-4 border border-charcoal/10 rounded-full hover:bg-white transition-all">
+            <button className="group w-full sm:w-auto flex items-center justify-center sm:justify-start space-x-4 text-charcoal text-[11px] tracking-widest px-8 md:px-10 py-4 border border-charcoal/10 rounded-full hover:bg-white transition-all">
               <span>시공 사례 보기</span>
               <ArrowRight size={14} className="group-hover:translate-x-2 transition-transform" />
             </button>
@@ -251,14 +251,14 @@ const Process = () => {
   ];
 
   return (
-    <section className="py-32 bg-white overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-20">
+    <section className="py-20 md:py-32 bg-white overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 md:px-6">
+        <div className="text-center mb-14 md:mb-20">
           <span className="text-clay text-[11px] uppercase tracking-[0.4em] mb-4 block font-bold">OUR PROCESS</span>
           <h2 className="text-4xl md:text-5xl font-serif italic">공간이 완성되는 따뜻한 여정</h2>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-12">
           {steps.map((step, index) => (
             <motion.div 
               key={step.number}
@@ -268,7 +268,7 @@ const Process = () => {
               transition={{ delay: index * 0.2 }}
               className="relative group"
             >
-              <div className="text-8xl font-serif text-beige/40 absolute -top-10 -left-4 group-hover:text-wood/10 transition-colors duration-700">
+              <div className="text-7xl md:text-8xl font-serif text-beige/40 absolute -top-8 md:-top-10 -left-3 md:-left-4 group-hover:text-wood/10 transition-colors duration-700">
                 {step.number}
               </div>
               <div className="relative z-10 pt-8">
@@ -290,9 +290,9 @@ const Process = () => {
 
 const Portfolio = () => {
   return (
-    <section id="portfolio" className="py-32 bg-warm-white">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-20">
+    <section id="portfolio" className="py-20 md:py-32 bg-warm-white">
+      <div className="max-w-7xl mx-auto px-4 md:px-6">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-14 md:mb-20">
           <div className="max-w-xl">
             <span className="text-clay text-[11px] uppercase tracking-[0.3em] mb-4 block font-bold">PORTFOLIO</span>
             <h2 className="text-4xl md:text-5xl font-serif italic mb-4">디자인 BK의 손길이 닿은 공간</h2>
@@ -303,7 +303,7 @@ const Portfolio = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
           {PROJECTS.map((project, index) => (
             <motion.div 
               key={project.id}
@@ -326,10 +326,10 @@ const Portfolio = () => {
                   </span>
                 </div>
               </div>
-              <div className="p-8">
+              <div className="p-6 md:p-8">
                 <div className="flex justify-between items-start mb-4">
                   <div>
-                    <h3 className="text-2xl font-serif mb-2 group-hover:text-wood transition-colors">{project.title}</h3>
+                    <h3 className="text-xl md:text-2xl font-serif mb-2 group-hover:text-wood transition-colors">{project.title}</h3>
                     <p className="text-xs text-charcoal/40 flex items-center">
                       <MapPin size={12} className="mr-1" /> {project.location}
                     </p>
@@ -352,12 +352,12 @@ const Portfolio = () => {
 
 const Services = () => {
   return (
-    <section id="services" className="py-32 bg-beige/30">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+    <section id="services" className="py-20 md:py-32 bg-beige/30">
+      <div className="max-w-7xl mx-auto px-4 md:px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20 items-center">
           <div className="order-2 lg:order-1">
             <span className="text-wood text-[11px] uppercase tracking-[0.3em] mb-6 block font-bold">OUR SERVICES</span>
-            <h2 className="text-4xl md:text-5xl mb-12 font-serif leading-tight">더 나은 일상을 위한 <br /> <span className="italic text-clay">공간의 재구성</span></h2>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl mb-10 md:mb-12 font-serif leading-tight">더 나은 일상을 위한 <br /> <span className="italic text-clay">공간의 재구성</span></h2>
             
             <div className="grid grid-cols-1 gap-8">
               {SERVICES.map((service, index) => (
@@ -367,7 +367,7 @@ const Services = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.2 }}
-                  className="bg-white p-8 rounded-2xl border border-beige/50 flex items-start space-x-6 hover:shadow-md transition-all"
+                  className="bg-white p-6 md:p-8 rounded-2xl border border-beige/50 flex items-start space-x-4 md:space-x-6 hover:shadow-md transition-all"
                 >
                   <div className="w-12 h-12 rounded-xl bg-beige flex items-center justify-center text-wood shrink-0">
                     {service.icon}
@@ -392,14 +392,14 @@ const Services = () => {
                 referrerPolicy="no-referrer"
               />
             </div>
-            <div className="absolute -bottom-10 -left-10 bg-white p-8 rounded-2xl shadow-xl max-w-xs border border-beige/50 hidden md:block">
+            <div className="absolute -bottom-6 md:-bottom-10 left-3 md:-left-10 bg-white p-4 md:p-8 rounded-2xl shadow-xl max-w-[14rem] md:max-w-xs border border-beige/50">
               <div className="flex items-center space-x-4 mb-4">
                 <div className="w-10 h-10 rounded-full bg-beige flex items-center justify-center text-wood">
                   <Coffee size={20} />
                 </div>
                 <span className="text-xs font-bold tracking-widest">DESIGN BK PHILOSOPHY</span>
               </div>
-              <p className="text-sm italic text-charcoal/70 leading-relaxed font-serif">
+              <p className="text-xs md:text-sm italic text-charcoal/70 leading-relaxed font-serif">
                 "우리는 집이 세상에서 가장 편안한 안식처가 되어야 한다고 믿습니다."
               </p>
             </div>
@@ -412,35 +412,40 @@ const Services = () => {
 
 const About = () => {
   return (
-    <section id="about" className="py-32 bg-warm-white">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-col lg:flex-row gap-20 items-center">
+    <section id="about" className="py-20 md:py-32 bg-warm-white">
+      <div className="max-w-7xl mx-auto px-4 md:px-6">
+        <div className="flex flex-col lg:flex-row gap-12 md:gap-20 items-center">
           <div className="lg:w-1/2">
             <div className="relative">
               <img 
-                src="https://images.unsplash.com/photo-1618219944342-824e40a13255?auto=format&fit=crop&q=80&w=1200" 
+                src="https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=1600" 
                 alt="Interior Design Studio" 
                 className="w-full aspect-[4/3] object-cover rounded-3xl shadow-lg"
                 referrerPolicy="no-referrer"
+                onError={(event) => {
+                  const img = event.currentTarget;
+                  img.onerror = null;
+                  img.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRw6o4hwETfgGChbjM8ZPklPkFYvOcZUumP-Q&s";
+                }}
               />
-              <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-wood rounded-full flex items-center justify-center text-white font-serif italic text-xl shadow-xl">
+              <div className="absolute -bottom-4 md:-bottom-6 -right-2 md:-right-6 w-24 h-24 md:w-32 md:h-32 bg-wood rounded-full flex items-center justify-center text-white font-serif italic text-base md:text-xl shadow-xl">
                 Since 1998
               </div>
             </div>
           </div>
           <div className="lg:w-1/2">
             <span className="text-clay text-[11px] uppercase tracking-[0.3em] mb-6 block font-bold">THE STUDIO</span>
-            <h2 className="text-4xl md:text-5xl font-serif mb-8 italic">공간에 온기를 더하는 사람들</h2>
-            <p className="text-charcoal/70 text-lg leading-relaxed mb-6 break-keep font-light">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif mb-6 md:mb-8 italic">공간에 온기를 더하는 사람들</h2>
+            <p className="text-charcoal/70 text-base md:text-lg leading-relaxed mb-5 md:mb-6 break-keep font-light">
               디자인 BK는 20년 넘게 한결같은 마음으로 고객의 공간을 연구해 왔습니다. 
               우리는 화려한 장식보다는 거주자의 편의와 심리적 안정을 우선으로 생각합니다.
             </p>
-            <p className="text-charcoal/60 leading-relaxed mb-10 break-keep font-light">
+            <p className="text-charcoal/60 leading-relaxed mb-8 md:mb-10 break-keep font-light">
               작은 소품 하나, 조명의 각도 하나까지 세심하게 고민하여 당신만의 아늑한 보금자리를 완성해 드립니다. 
               디자인 BK와 함께라면 평범했던 일상이 특별한 휴식이 됩니다.
             </p>
             
-            <div className="flex space-x-12">
+            <div className="grid grid-cols-2 gap-6 sm:flex sm:space-x-12 sm:gap-0">
               <div>
                 <p className="text-3xl font-serif mb-1 text-wood">2,000+</p>
                 <p className="text-[10px] uppercase tracking-widest text-charcoal/40">Happy Clients</p>
@@ -459,39 +464,39 @@ const About = () => {
 
 const Contact = () => {
   return (
-    <section id="contact" className="py-32 bg-white">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="bg-beige/20 rounded-[3rem] p-10 md:p-20 overflow-hidden relative">
+    <section id="contact" className="py-20 md:py-32 bg-white">
+      <div className="max-w-7xl mx-auto px-4 md:px-6">
+        <div className="bg-beige/20 rounded-[2rem] md:rounded-[3rem] p-6 sm:p-10 md:p-20 overflow-hidden relative">
           <div className="absolute top-0 right-0 w-64 h-64 bg-wood/5 rounded-full -translate-y-1/2 translate-x-1/2" />
           
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-20 relative z-10">
             <div>
               <span className="text-wood text-[11px] uppercase tracking-[0.3em] mb-6 block font-bold">CONTACT US</span>
-              <h2 className="text-4xl md:text-6xl mb-12 font-serif italic leading-tight">아늑한 변화의 시작, <br /> 지금 문의하세요</h2>
+              <h2 className="text-3xl sm:text-4xl md:text-6xl mb-8 md:mb-12 font-serif italic leading-tight">아늑한 변화의 시작, <br /> 지금 문의하세요</h2>
               
-              <div className="space-y-8">
+              <div className="space-y-5 md:space-y-8">
                 <div className="flex items-center space-x-4">
                   <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-wood shadow-sm">
                     <Phone size={18} />
                   </div>
-                  <p className="text-lg font-light">02-1234-5678</p>
+                  <p className="text-base md:text-lg font-light">02-1234-5678</p>
                 </div>
                 <div className="flex items-center space-x-4">
                   <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-wood shadow-sm">
                     <Mail size={18} />
                   </div>
-                  <p className="text-lg font-light">designbk@interior.com</p>
+                  <p className="text-base md:text-lg font-light break-all">designbk@interior.com</p>
                 </div>
                 <div className="flex items-center space-x-4">
                   <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-wood shadow-sm">
                     <MapPin size={18} />
                   </div>
-                  <p className="text-lg font-light">서울시 강남구 테헤란로 123</p>
+                  <p className="text-base md:text-lg font-light">서울시 강남구 테헤란로 123</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-beige/50">
+            <div className="bg-white p-6 md:p-12 rounded-3xl shadow-xl border border-beige/50">
               <form className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
@@ -521,8 +526,8 @@ const Contact = () => {
 
 const Footer = () => {
   return (
-    <footer className="bg-charcoal text-warm-white py-20">
-      <div className="max-w-7xl mx-auto px-6">
+    <footer className="bg-charcoal text-warm-white py-16 md:py-20">
+      <div className="max-w-7xl mx-auto px-4 md:px-6">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-16">
           <Logo />
           <div className="flex space-x-8 mt-8 md:mt-0">
