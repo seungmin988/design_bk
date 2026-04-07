@@ -19,7 +19,6 @@
 
   body {
     @apply bg-warm-white text-charcoal font-sans antialiased;
-    overscroll-behavior-y: contain;
   }
   
   h1, h2, h3, h4, h5, h6 {
@@ -44,6 +43,12 @@
   @apply bg-warm-white/90 backdrop-blur-md border-b border-charcoal/5;
 }
 
+nav {
+  will-change: transform;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
 .cozy-card {
   @apply bg-white rounded-3xl shadow-sm border border-beige/50 overflow-hidden transition-all duration-500 hover:shadow-xl hover:-translate-y-1;
 }
@@ -59,6 +64,10 @@
 @media (max-width: 768px) {
   .glass-nav {
     @apply bg-warm-white/95 backdrop-blur-none;
+  }
+
+  .cozy-card {
+    @apply hover:-translate-y-0 hover:shadow-sm;
   }
 }
 

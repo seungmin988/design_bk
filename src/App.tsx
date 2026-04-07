@@ -173,7 +173,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-700 ${scrolled ? 'glass-nav py-3 md:py-4' : 'bg-transparent py-5 md:py-8'}`}>
+    <nav className={`fixed top-0 left-0 w-full z-50 transition-[padding,background-color,border-color,box-shadow] duration-500 ${scrolled ? 'glass-nav py-3 md:py-4' : 'bg-transparent py-5 md:py-8'}`}>
       <div className="max-w-7xl mx-auto px-4 md:px-6 flex justify-between items-center">
         <Logo />
         
